@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.BufferedImageHttpMessageConverter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(KaptchaProperties.class)
@@ -24,5 +26,24 @@ public class KaptchaAutoConfiguration {
     @ConditionalOnMissingBean
     public Config config() {
         return new Config(properties.getConfig());
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public KaptchaController controller(Config config) {
+        return new KaptchaController(config, properties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public BufferedImageHttpMessageConverter messageConverter() {
+        return new BufferedImageHttpMessageConverter();
+    }
+
+    @Bean
+    @ConditionalOnClass(WebSecurityConfigurerAdapter.class)
+    @ConditionalOnMissingBean
+    public KaptchaSecurityConfigurerAdapter adapter(Config config) {
+        return new KaptchaSecurityConfigurerAdapter(config, properties);
     }
 }

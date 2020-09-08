@@ -26,7 +26,7 @@ public class KaptchaFilter extends AbstractAuthenticationProcessingFilter {
     private final KaptchaProperties properties;
 
     public KaptchaFilter(Config config, KaptchaProperties properties) {
-        super(new AntPathRequestMatcher(properties.getPath(), HttpMethod.POST.name()));
+        super(new AntPathRequestMatcher(properties.getLoginPath(), HttpMethod.POST.name()));
         this.config = config;
         this.properties = properties;
         setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(properties.getFailurePath()));

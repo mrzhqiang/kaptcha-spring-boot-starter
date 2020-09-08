@@ -2,7 +2,6 @@ package com.github.mrzhqiang.kaptcha.autoconfigure;
 
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.util.Config;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -10,24 +9,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 
 @Controller
-@RequestMapping("/kaptcha")
+@RequestMapping("${spring.kaptcha.path:/kaptcha}")
 public class KaptchaController {
     private final Config config;
     private final KaptchaProperties properties;
 
-    @Autowired
     public KaptchaController(Config config, KaptchaProperties properties) {
         this.config = config;
         this.properties = properties;
     }
 
     @GetMapping
+    @ResponseBody
     public ResponseEntity<BufferedImage> index(HttpSession session) {
         if (!properties.getEnabled()) {
             return ResponseEntity.noContent().build();

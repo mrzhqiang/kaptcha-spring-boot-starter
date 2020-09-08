@@ -11,17 +11,19 @@ public class KaptchaProperties {
     private static final String DEFAULT_EMPTY_TIPS = "验证码不能为空";
     private static final String DEFAULT_INVALID_TIPS = "无效的验证码";
     private static final String DEFAULT_TIMEOUT_TIPS = "验证码已过期";
-    private static final String DEFAULT_PARAMETER = "kaptcha";
+    private static final String DEFAULT_PATH = "/kaptcha";
+    private static final String DEFAULT_LOGIN_PATH = "/login";
     private static final String DEFAULT_FAILURE_PATH = "/login?error";
-    private static final String DEFAULT_PATH = "/login";
+    private static final String DEFAULT_PARAMETER = "kaptcha";
 
     private Boolean enabled = false;
+    private String path = DEFAULT_PATH;
+    private String loginPath = DEFAULT_LOGIN_PATH;
+    private String failurePath = DEFAULT_FAILURE_PATH;
+    private String parameter = DEFAULT_PARAMETER;
     private String emptyTips = DEFAULT_EMPTY_TIPS;
     private String invalidTips = DEFAULT_INVALID_TIPS;
     private String timeoutTips = DEFAULT_TIMEOUT_TIPS;
-    private String path = DEFAULT_PATH;
-    private String failurePath = DEFAULT_FAILURE_PATH;
-    private String parameter = DEFAULT_PARAMETER;
     private Duration timeout = DEFAULT_TIMEOUT;
     private Properties config = new Properties();
 
@@ -31,6 +33,38 @@ public class KaptchaProperties {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getLoginPath() {
+        return loginPath;
+    }
+
+    public void setLoginPath(String loginPath) {
+        this.loginPath = loginPath;
+    }
+
+    public String getFailurePath() {
+        return failurePath;
+    }
+
+    public void setFailurePath(String failurePath) {
+        this.failurePath = failurePath;
+    }
+
+    public String getParameter() {
+        return parameter;
+    }
+
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
     }
 
     public String getEmptyTips() {
@@ -63,30 +97,6 @@ public class KaptchaProperties {
 
     public void setTimeout(Duration timeout) {
         this.timeout = timeout;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getFailurePath() {
-        return failurePath;
-    }
-
-    public void setFailurePath(String failurePath) {
-        this.failurePath = failurePath;
-    }
-
-    public String getParameter() {
-        return parameter;
-    }
-
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
     }
 
     public Properties getConfig() {
