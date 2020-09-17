@@ -18,6 +18,7 @@ public class KaptchaProperties {
 
     private Boolean enabled = false;
     private String path = DEFAULT_PATH;
+    private String[] ignorePath = new String[0];
     private String loginPath = DEFAULT_LOGIN_PATH;
     private String failurePath = DEFAULT_FAILURE_PATH;
     private String parameter = DEFAULT_PARAMETER;
@@ -41,6 +42,14 @@ public class KaptchaProperties {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String[] getIgnorePath() {
+        return ignorePath;
+    }
+
+    public void setIgnorePath(String[] ignorePath) {
+        this.ignorePath = ignorePath;
     }
 
     public String getLoginPath() {

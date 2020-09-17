@@ -23,6 +23,7 @@ public class KaptchaSecurityConfigurerAdapter extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(registry ->
                 registry.antMatchers(properties.getPath()).permitAll()
+                        .antMatchers(properties.getIgnorePath()).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(configurer -> configurer.loginPage(properties.getLoginPath()).permitAll())
                 .logout().permitAll();
