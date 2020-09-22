@@ -3,7 +3,9 @@ package com.github.mrzhqiang.kaptcha.autoconfigure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Properties;
+import java.util.StringJoiner;
 
 @ConfigurationProperties("spring.kaptcha")
 public class KaptchaProperties {
@@ -114,5 +116,22 @@ public class KaptchaProperties {
 
     public void setConfig(Properties config) {
         this.config = config;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", KaptchaProperties.class.getSimpleName() + "[", "]")
+                .add("enabled=" + enabled)
+                .add("path='" + path + "'")
+                .add("ignorePath=" + Arrays.toString(ignorePath))
+                .add("loginPath='" + loginPath + "'")
+                .add("failurePath='" + failurePath + "'")
+                .add("parameter='" + parameter + "'")
+                .add("emptyTips='" + emptyTips + "'")
+                .add("invalidTips='" + invalidTips + "'")
+                .add("timeoutTips='" + timeoutTips + "'")
+                .add("timeout=" + timeout)
+                .add("config=" + config)
+                .toString();
     }
 }
