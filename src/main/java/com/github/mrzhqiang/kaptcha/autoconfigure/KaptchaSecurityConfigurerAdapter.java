@@ -1,14 +1,10 @@
 package com.github.mrzhqiang.kaptcha.autoconfigure;
 
 import com.google.code.kaptcha.util.Config;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.boot.autoconfigure.security.SecurityProperties.BASIC_AUTH_ORDER;
-
-@Order(BASIC_AUTH_ORDER - 1)
 public class KaptchaSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
     private final Config config;

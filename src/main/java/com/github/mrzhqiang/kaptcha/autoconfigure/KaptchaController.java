@@ -18,6 +18,7 @@ import java.util.Date;
 @Controller
 @RequestMapping("${spring.kaptcha.path:/kaptcha}")
 public class KaptchaController {
+
     private final Config config;
     private final KaptchaProperties properties;
 
