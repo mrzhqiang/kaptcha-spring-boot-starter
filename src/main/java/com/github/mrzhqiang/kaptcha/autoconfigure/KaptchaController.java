@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 
+/**
+ * 验证码控制器。
+ */
 @Controller
 @RequestMapping("${spring.kaptcha.path:/kaptcha}")
 public class KaptchaController {

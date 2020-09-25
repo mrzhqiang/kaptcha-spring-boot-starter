@@ -13,14 +13,13 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <slf4j.version>1.7.25</slf4j.version>
         <kaptcha.version>2.3.2</kaptcha.version>
 
         <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
 
-        <version.compiler-plugin>3.5.1</version.compiler-plugin>
-        <version.source-plugin>2.2.1</version.source-plugin>
-        <version.javadoc-plugin>2.9.1</version.javadoc-plugin>
+        <compiler-plugin.version>3.5.1</compiler-plugin.version>
+        <source-plugin.version>2.2.1</source-plugin.version>
+        <javadoc-plugin.version>2.9.1</javadoc-plugin.version>
     </properties>
 
     <dependencies>
@@ -36,6 +35,10 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,17 +53,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -92,7 +89,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.compiler-plugin}</version>
+                <version>${compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -102,7 +99,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>${version.source-plugin}</version>
+                <version>${source-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -115,7 +112,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${version.javadoc-plugin}</version>
+                <version>${javadoc-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

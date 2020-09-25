@@ -1,40 +1,42 @@
 package com.github.mrzhqiang.kaptcha.autoconfigure;
 
 import com.google.code.kaptcha.util.Config;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
-public class KaptchaFilter extends AbstractAuthenticationProcessingFilter {
+
+/**
+ * 验证码认证转换器。
+ * <p>
+ * 主要为了验证会话中的验证码是否有效。
+ * <p>
+ * 有效包括：1. 完全匹配；2. 尚未超时。
+ */
+public class KaptchaAuthenticationConverter implements AuthenticationConverter {
 
     private final Config config;
     private final KaptchaProperties properties;
 
-    public KaptchaFilter(Config config, KaptchaProperties properties) {
-        super(new AntPathRequestMatcher(properties.getLoginPath(), HttpMethod.POST.name()));
+    public KaptchaAuthenticationConverter(Config config, KaptchaProperties properties) {
         this.config = config;
         this.properties = properties;
-        setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(properties.getFailurePath()));
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication convert(HttpServletRequest request) {
         if (!properties.getEnabled()) {
+            // null is disabled or kaptcha successful
             return null;
         }
         String verifyCode = request.getParameter(properties.getParameter());
