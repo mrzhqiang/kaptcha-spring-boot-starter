@@ -1,42 +1,34 @@
 package com.github.mrzhqiang.kaptcha.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.util.Properties;
-import java.util.StringJoiner;
 
-/**
- * 验证码配置。
- */
 @ConfigurationProperties("spring.kaptcha")
-@Validated
 public class KaptchaProperties {
-    private static final Duration DEFAULT_TIMEOUT = Duration.ofMinutes(5);
+
+    public static final String KEY_SESSION_CODE = "KAPTCHA_SESSION_CODE";
+    public static final String KEY_SESSION_DATE = "KAPTCHA_SESSION_DATE";
+
+    private static final String DEFAULT_PATH = "/kaptcha";
+    private static final String DEFAULT_LOGIN_PATH = "/login";
+    private static final String DEFAULT_FAILURE_PATH = "/login?error";
+    private static final String DEFAULT_PARAMETER = "kaptcha";
     private static final String DEFAULT_EMPTY_TIPS = "验证码不能为空";
     private static final String DEFAULT_INVALID_TIPS = "无效的验证码";
     private static final String DEFAULT_TIMEOUT_TIPS = "验证码已过期";
-    private static final String DEFAULT_PATH = "/kaptcha";
-    private static final String DEFAULT_PARAMETER = "kaptcha";
+    private static final Duration DEFAULT_TIMEOUT = Duration.ofMinutes(5);
 
-    @NotNull
     private Boolean enabled = false;
-    @NotEmpty
     private String path = DEFAULT_PATH;
-    @NotEmpty
+    private String loginPath = DEFAULT_LOGIN_PATH;
+    private String failurePath = DEFAULT_FAILURE_PATH;
     private String parameter = DEFAULT_PARAMETER;
-    @NotEmpty
     private String emptyTips = DEFAULT_EMPTY_TIPS;
-    @NotEmpty
     private String invalidTips = DEFAULT_INVALID_TIPS;
-    @NotEmpty
     private String timeoutTips = DEFAULT_TIMEOUT_TIPS;
-    @NotNull
     private Duration timeout = DEFAULT_TIMEOUT;
-    @NotNull
     private Properties config = new Properties();
 
     public Boolean getEnabled() {
@@ -53,6 +45,22 @@ public class KaptchaProperties {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getLoginPath() {
+        return loginPath;
+    }
+
+    public void setLoginPath(String loginPath) {
+        this.loginPath = loginPath;
+    }
+
+    public String getFailurePath() {
+        return failurePath;
+    }
+
+    public void setFailurePath(String failurePath) {
+        this.failurePath = failurePath;
     }
 
     public String getParameter() {
@@ -101,19 +109,5 @@ public class KaptchaProperties {
 
     public void setConfig(Properties config) {
         this.config = config;
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", KaptchaProperties.class.getSimpleName() + "[", "]")
-                .add("enabled=" + enabled)
-                .add("path='" + path + "'")
-                .add("parameter='" + parameter + "'")
-                .add("emptyTips='" + emptyTips + "'")
-                .add("invalidTips='" + invalidTips + "'")
-                .add("timeoutTips='" + timeoutTips + "'")
-                .add("timeout=" + timeout)
-                .add("config=" + config)
-                .toString();
     }
 }

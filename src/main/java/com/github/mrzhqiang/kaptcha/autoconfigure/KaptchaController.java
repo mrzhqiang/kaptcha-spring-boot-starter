@@ -1,7 +1,6 @@
 package com.github.mrzhqiang.kaptcha.autoconfigure;
 
-import com.google.code.kaptcha.Producer;
-import com.google.code.kaptcha.util.Config;
+import com.github.mrzhqiang.helper.captcha.Captcha;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,18 +14,14 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 
-/**
- * 验证码控制器。
- */
 @Controller
 @RequestMapping("${spring.kaptcha.path:/kaptcha}")
 public class KaptchaController {
-
-    private final Config config;
+    private final Captcha captcha;
     private final KaptchaProperties properties;
 
-    public KaptchaController(Config config, KaptchaProperties properties) {
-        this.config = config;
+    public KaptchaController(Captcha captcha, KaptchaProperties properties) {
+        this.captcha = captcha;
         this.properties = properties;
     }
 
@@ -36,12 +31,13 @@ public class KaptchaController {
         if (!properties.getEnabled()) {
             return ResponseEntity.noContent().build();
         }
-        Producer producer = config.getProducerImpl();
-        String code = producer.createText();
-        session.setAttribute(config.getSessionKey(), code);
-        session.setAttribute(config.getSessionDate(), new Date());
 
-        BufferedImage image = producer.createImage(code);
+        String code = captcha.text();
+
+        session.setAttribute(KaptchaProperties.KEY_SESSION_CODE, code);
+        session.setAttribute(KaptchaProperties.KEY_SESSION_DATE, new Date());
+
+        BufferedImage image = captcha.image(code);
         HttpHeaders headers = new HttpHeaders();
         // Set to expire far in the past
         headers.setExpires(0);
@@ -57,5 +53,4 @@ public class KaptchaController {
                 .header(HttpHeaders.CACHE_CONTROL, "post-check=0", "pre-check=0")
                 .body(image);
     }
-
 }

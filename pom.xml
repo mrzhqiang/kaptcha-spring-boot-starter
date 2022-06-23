@@ -5,7 +5,7 @@
 
     <groupId>com.github.mrzhqiang.kaptcha</groupId>
     <artifactId>kaptcha-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>2022.0.1-SNAPSHOT</version>
     <name>kaptcha-spring-boot-starter</name>
     <description>Kaptcha For Spring Boot Starter</description>
     <packaging>jar</packaging>
@@ -13,10 +13,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <kaptcha.version>2.3.2</kaptcha.version>
-
-        <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
-
+        <helper.version>2021.1.4</helper.version>
+        <spring-boot.version>2.7.0</spring-boot.version>
+        <slf4j.version>1.7.25</slf4j.version>
         <compiler-plugin.version>3.5.1</compiler-plugin.version>
         <source-plugin.version>2.2.1</source-plugin.version>
         <javadoc-plugin.version>2.9.1</javadoc-plugin.version>
@@ -24,8 +23,22 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.mrzhqiang.helper</groupId>
+            <artifactId>helper-captcha-simple</artifactId>
+            <version>${helper.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -35,10 +48,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,17 +56,11 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.penggle</groupId>
-            <artifactId>kaptcha</artifactId>
-            <version>${kaptcha.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

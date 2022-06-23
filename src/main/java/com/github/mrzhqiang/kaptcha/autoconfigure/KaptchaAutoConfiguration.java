@@ -1,19 +1,14 @@
 package com.github.mrzhqiang.kaptcha.autoconfigure;
 
-import com.google.code.kaptcha.util.Config;
+import com.github.mrzhqiang.helper.captcha.Captcha;
+import com.github.mrzhqiang.helper.captcha.simple.SimpleCaptcha;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.BufferedImageHttpMessageConverter;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.AuthenticationFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * 验证码自动配置类。
@@ -23,11 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(KaptchaProperties.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@ConditionalOnClass(Config.class)
+@ConditionalOnClass({Captcha.class, SimpleCaptcha.class})
 public class KaptchaAutoConfiguration {
-
-    private static final String LOGIN_PATH = "/login";
-    private static final String LOGIN_METHOD = "POST";
 
     private final KaptchaProperties properties;
 
@@ -37,14 +29,14 @@ public class KaptchaAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Config config() {
-        return new Config(properties.getConfig());
+    public Captcha captcha() {
+        return SimpleCaptcha.of();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public KaptchaController controller(Config config) {
-        return new KaptchaController(config, properties);
+    public KaptchaController controller(Captcha captcha) {
+        return new KaptchaController(captcha, properties);
     }
 
     @Bean
@@ -55,29 +47,7 @@ public class KaptchaAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public KaptchaAuthenticationConverter authenticationConverter(Config config) {
-        return new KaptchaAuthenticationConverter(config, properties);
-    }
-
-    @Bean
-    @ConditionalOnClass(WebSecurityConfigurerAdapter.class)
-    @ConditionalOnMissingBean(WebSecurityConfigurerAdapter.class)
-    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-    @Order(SecurityProperties.BASIC_AUTH_ORDER)
-    public WebSecurityConfigurerAdapter adapter(KaptchaAuthenticationConverter converter) {
-        return new WebSecurityConfigurerAdapter() {
-            @Override
-            protected void configure(HttpSecurity http) throws Exception {
-                AuthenticationFilter filter = new AuthenticationFilter(authenticationManager(), converter);
-                http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
-                        .authorizeRequests()
-                        .antMatchers(properties.getPath()).permitAll()
-                        .anyRequest().authenticated()
-                        .and()
-                        .formLogin().loginPage(LOGIN_PATH).permitAll()
-                        .and()
-                        .logout().permitAll();
-            }
-        };
+    public KaptchaAuthenticationConverter authenticationConverter() {
+        return new KaptchaAuthenticationConverter(properties);
     }
 }
