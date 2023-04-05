@@ -5,7 +5,7 @@
 
     <groupId>com.github.mrzhqiang.kaptcha</groupId>
     <artifactId>kaptcha-spring-boot-starter</artifactId>
-    <version>2022.0.1-SNAPSHOT</version>
+    <version>2022.0.2-SNAPSHOT</version>
     <name>kaptcha-spring-boot-starter</name>
     <description>Kaptcha For Spring Boot Starter</description>
     <packaging>jar</packaging>
@@ -13,8 +13,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <helper.version>2021.1.4</helper.version>
-        <spring-boot.version>2.7.0</spring-boot.version>
+        <helper.version>2022.1.2</helper.version>
+        <spring-boot.version>2.7.10</spring-boot.version>
         <slf4j.version>1.7.25</slf4j.version>
         <compiler-plugin.version>3.5.1</compiler-plugin.version>
         <source-plugin.version>2.2.1</source-plugin.version>
