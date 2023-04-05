@@ -5,7 +5,7 @@
 
     <groupId>com.github.mrzhqiang.kaptcha</groupId>
     <artifactId>kaptcha-spring-boot-starter</artifactId>
-    <version>2022.0.2-SNAPSHOT</version>
+    <version>2023.1.0</version>
     <name>kaptcha-spring-boot-starter</name>
     <description>Kaptcha For Spring Boot Starter</description>
     <packaging>jar</packaging>
