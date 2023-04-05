@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 import java.util.Date;
 
 @Controller
-@RequestMapping("${spring.kaptcha.path:/kaptcha}")
+@RequestMapping("${kaptcha.path:/kaptcha}")
 public class KaptchaController {
     private final Captcha captcha;
     private final KaptchaProperties properties;

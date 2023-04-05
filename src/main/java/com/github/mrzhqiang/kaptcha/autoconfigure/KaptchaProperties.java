@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.time.Duration;
 import java.util.Properties;
 
-@ConfigurationProperties("spring.kaptcha")
+@ConfigurationProperties("kaptcha")
 public class KaptchaProperties {
 
     public static final String KEY_SESSION_CODE = "KAPTCHA_SESSION_CODE";
